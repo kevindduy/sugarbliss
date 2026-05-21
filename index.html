@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sugar Bliss | Custom Treats by Danielle & Kylyn</title>
+    <title>Sugar Bliss | Handcrafted Treats by Danielle & Kylyn</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@500;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ALL CSS GOES HERE --- */
         :root {
             --bg-light: #fff0f3; 
             --card-bg: #ffffff;
@@ -36,7 +35,7 @@
 
         h1, .section-title { font-family: 'Fredoka', sans-serif; }
         h2, .sub-heading { font-family: 'Playfair Display', serif; }
-        .subtitle { font-family: 'Caveat', cursive; font-size: clamp(2rem, 5vw, 2.8rem); color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
+        .subtitle { font-family: 'Caveat', cursive; font-size: clamp(2rem, 5vw, 2.8rem); color: #fff; }
 
         /* Marquee Ticker */
         .marquee-container {
@@ -47,27 +46,10 @@
             white-space: nowrap;
             font-size: 0.9rem;
             font-weight: 700;
-            letter-spacing: 1px;
+            z-index: 100;
         }
-        .marquee-text {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
+        .marquee-text { display: inline-block; animation: marquee 20s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* Tooltips */
-        .tooltip-target { position: relative; cursor: pointer; }
-        .tooltip-target::after {
-            content: attr(data-tooltip);
-            position: absolute; bottom: 110%; left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: var(--text-main); color: #fff;
-            padding: 8px 12px; border-radius: 8px;
-            font-size: 0.85rem; font-family: 'Quicksand', sans-serif;
-            white-space: nowrap; opacity: 0; pointer-events: none;
-            transition: var(--transition); z-index: 100;
-        }
-        .tooltip-target:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         /* Hero Section */
         #hero {
@@ -83,161 +65,136 @@
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             pointer-events: none; z-index: 0;
         }
-        .hero-text, .hero-image-container { z-index: 1; text-align: center; margin: 20px; }
-        .hero-text h1 { font-size: clamp(3.5rem, 10vw, 5.5rem); line-height: 1.1; margin-bottom: -5px; }
-        .description { font-size: clamp(1.05rem, 3vw, 1.25rem); max-width: 500px; margin: 20px auto; line-height: 1.6; font-weight: 600; color: #fff;}
 
-        .pill-btn {
-            background: white; color: var(--text-main);
-            border: none; padding: 15px 35px; border-radius: 50px;
-            font-family: 'Fredoka', sans-serif; font-size: 1.2rem;
-            box-shadow: var(--shadow-soft); transition: var(--transition);
-            cursor: pointer; margin-top: 15px;
+        .hero-text { z-index: 1; text-align: left; max-width: 550px; margin: 20px; }
+        .hero-text h1 { font-size: clamp(3.5rem, 10vw, 5.5rem); line-height: 1.1; margin-bottom: -5px; color: var(--text-main); }
+        .description { font-size: 1.2rem; margin: 20px 0; line-height: 1.6; font-weight: 600; color: #fff;}
+
+        /* Floating Callout (Cursive + Arrow) */
+        .hero-image-container { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; }
+        
+        .menu-callout {
+            position: absolute;
+            left: -120px;
+            top: 40%;
+            transform: rotate(-15deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
         }
-        .pill-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); color: #f4a2b6; }
+
+        .cursive-label {
+            font-family: 'Caveat', cursive;
+            font-size: 2.5rem;
+            color: var(--text-main);
+            white-space: nowrap;
+            margin-bottom: -10px;
+        }
+
+        .arrow-svg {
+            width: 80px;
+            height: auto;
+            fill: var(--text-main);
+        }
 
         #hero-lollipop {
             width: 100%; max-width: 380px;
             filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2));
             animation: float 4s ease-in-out infinite; cursor: pointer;
+            transition: var(--transition);
         }
+        #hero-lollipop:hover { transform: scale(1.05); }
+
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(3deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
         }
 
-        .wave-divider {
-            position: absolute; bottom: -1px; left: 0; width: 100%;
-            overflow: hidden; line-height: 0;
-        }
-        .wave-divider svg { display: block; width: calc(100% + 1.3px); height: 80px; }
-        .wave-divider .shape-fill { fill: var(--bg-light); }
+        .wave-divider { position: absolute; bottom: -1px; left: 0; width: 100%; line-height: 0; }
+        .wave-divider svg { display: block; width: calc(100% + 1.3px); height: 80px; fill: var(--bg-light); }
 
-        /* Hidden Section Logic */
-        .hidden-section { display: none; opacity: 0; transform: translateY(40px); }
-        .reveal-section { display: block; opacity: 1; transform: translateY(0); transition: var(--transition); animation: fadeUp 0.6s ease forwards; }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        /* Product Section */
+        .hidden-section { display: none; }
+        .reveal-section { display: block; animation: fadeUp 0.6s ease forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Product Cards */
         #product-section { padding: 8% 5%; text-align: center; }
-        .section-title { font-size: clamp(2.2rem, 6vw, 3.5rem); margin-bottom: 40px; color: var(--text-main); }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-size: clamp(2.5rem, 7vw, 3.8rem); margin-bottom: 50px; color: var(--text-main); }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
 
         .product-card {
-            background: var(--card-bg); border-radius: 24px; padding: 20px;
+            background: var(--card-bg); border-radius: 30px; padding: 25px;
             box-shadow: var(--shadow-soft); position: relative;
             cursor: pointer; transition: var(--transition); border: 2px solid transparent;
         }
-        .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-color: #ffc1cc; }
-        .product-card img { width: 100%; height: 200px; object-fit: contain; background: #fafafa; border-radius: 12px; }
-        .product-card h3 { font-family: 'Fredoka', sans-serif; font-size: 1.3rem; margin-top: 15px; }
+        .product-card:hover { transform: translateY(-10px); border-color: #ffc1cc; }
+        .product-card img { width: 100%; height: 230px; object-fit: contain; background: #fafafa; border-radius: 20px; }
+        .product-card h3 { font-family: 'Fredoka', sans-serif; font-size: 1.5rem; margin-top: 15px; }
 
-        .badge {
-            position: absolute; top: 15px; right: 15px; padding: 6px 12px;
-            border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        .badge { position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
         .badge.best-seller { background: var(--accent-fun); color: var(--text-main); }
         .badge.new { background: var(--accent-teal); color: white; }
 
-        /* Information & Story Section */
-        #info-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 5% 10% 10% 10%; }
-        .info-card { background: var(--card-bg); padding: 35px; border-radius: 24px; box-shadow: var(--shadow-soft); }
-        .info-card h2 { margin-bottom: 15px; color: var(--text-main); font-size: clamp(1.8rem, 4vw, 2.2rem);}
-        .info-card p { line-height: 1.7; color: var(--text-muted); margin-bottom: 20px; font-size: 1.05rem;}
-        
+        /* Story & Info */
+        #info-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; padding: 5% 10% 5% 10%; }
+        .info-card { background: var(--card-bg); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-soft); }
+        .info-card h2 { margin-bottom: 20px; color: var(--text-main); font-size: 2.2rem;}
+        .info-card p { line-height: 1.7; color: var(--text-muted); margin-bottom: 15px; font-size: 1.1rem;}
         .highlight-text { font-family: 'Fredoka', sans-serif; color: #f4a2b6; font-size: 1.1rem; display: block; margin-bottom: 5px;}
 
-        /* Responsive Table */
-        .table-responsive { overflow-x: auto; width: 100%; }
-        .ui-table { width: 100%; border-collapse: collapse; margin-top: 15px; min-width: 250px; }
-        .ui-table th, .ui-table td { padding: 12px; text-align: left; border-bottom: 2px solid var(--bg-light); font-size: 0.95rem; }
-        .ui-table th { background: var(--bg-light); color: var(--text-main); font-family: 'Fredoka', sans-serif; border-radius: 8px 8px 0 0; }
-        .ui-table td { color: var(--text-muted); }
-
-        .ui-accordion { margin-top: 15px; border: 2px solid var(--bg-light); border-radius: 12px; overflow: hidden; transition: var(--transition); }
-        .ui-accordion summary { background: var(--bg-light); padding: 15px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--text-main);}
-        .ui-accordion summary::after { content: '▼'; font-size: 0.8rem; transition: transform 0.3s; }
-        .ui-accordion[open] summary::after { transform: rotate(180deg); }
-        .accordion-content { padding: 20px; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; }
+        /* Contact Section */
+        #contact-footer {
+            background: #1a1a2e; color: white; padding: 60px 10% 100px 10%; text-align: center;
+        }
+        .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 30px; }
+        .contact-item { text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; transition: var(--transition); }
+        .contact-item:hover { color: #f4a2b6; transform: translateY(-5px); }
+        .contact-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .contact-label { font-family: 'Fredoka', sans-serif; font-size: 1.2rem; }
 
         /* FAB */
         .fab {
-            position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px;
-            border-radius: 50%; background: var(--text-main); color: white;
+            position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px;
+            border-radius: 50%; background: #f4a2b6; color: white;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            z-index: 1000; transition: var(--transition); border: 3px solid white;
+            font-size: 2rem; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000; transition: var(--transition); border: 4px solid white;
         }
-        .fab:hover { transform: scale(1.1) rotate(15deg); background: #f4a2b6; border-color: var(--text-main); color: var(--text-main);}
+        .fab:hover { transform: scale(1.1) rotate(15deg); background: var(--text-main); }
 
-        /* Modal Gallery */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(26, 26, 46, 0.85); backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s ease; }
-        .modal.show { display: flex; align-items: center; justify-content: center; opacity: 1; }
-        .modal-content { background: var(--card-bg); border-radius: 24px; width: 95%; max-width: 900px; padding: 40px; position: relative; transform: scale(0.95); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto; }
-        .modal.show .modal-content { transform: scale(1); }
-        .close-btn { position: absolute; top: 15px; right: 25px; font-size: 2.5rem; color: var(--text-muted); cursor: pointer; transition: color 0.3s; z-index: 10; }
-        .close-btn:hover { color: #f4a2b6; }
-
-        .modal-layout { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 10px;}
-        .modal-gallery { flex: 1.2; min-width: 100%; }
-        #main-modal-img { width: 100%; height: 350px; object-fit: contain; background: #fafafa; border-radius: 16px; margin-bottom: 15px; border: 1px solid var(--bg-light);}
-        .thumbnail-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; }
-        .thumbnail-row img { width: 70px; height: 70px; object-fit: cover; border-radius: 12px; cursor: pointer; opacity: 0.5; border: 3px solid transparent; transition: var(--transition); flex-shrink: 0; }
-        .thumbnail-row img.active, .thumbnail-row img:hover { opacity: 1; border-color: #f4a2b6; }
-
-        .modal-details { flex: 1; min-width: 100%; display: flex; flex-direction: column; justify-content: center;}
-        .modal-details h2 { font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 5px; color: var(--text-main); padding-right: 30px;}
-        .modal-details .price { font-size: 1.8rem; font-weight: bold; color: var(--accent-teal); margin: 10px 0; font-family: 'Fredoka', sans-serif; }
-        .desc-text { font-size: 1.05rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px;}
+        /* Modal Product Viewer */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(26, 26, 46, 0.9); backdrop-filter: blur(8px); }
+        .modal.show { display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: var(--card-bg); border-radius: 24px; width: 95%; max-width: 1000px; padding: 40px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-btn { position: absolute; top: 15px; right: 25px; font-size: 2.5rem; color: var(--text-muted); cursor: pointer; }
+        .modal-layout { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 10px; }
         
-        .modal-call-btn {
-            display: inline-block; text-align: center; background: var(--text-main); color: white;
-            padding: 15px 30px; border-radius: 50px; font-family: 'Fredoka', sans-serif; font-size: 1.1rem;
-            text-decoration: none; transition: var(--transition); box-shadow: var(--shadow-soft);
-        }
-        .modal-call-btn:hover { background: #f4a2b6; color: var(--text-main); transform: translateY(-3px); }
+        .modal-gallery { flex: 1.2; min-width: 300px; }
+        #main-modal-img { width: 100%; height: 400px; object-fit: contain; background: #fafafa; border-radius: 16px; }
+        
+        .modal-details { flex: 1; min-width: 300px; display: flex; flex-direction: column; justify-content: center; }
+        .modal-details h2 { font-size: 2.5rem; color: var(--text-main); margin-bottom: 5px; }
+        .modal-details .price { font-size: 2rem; font-weight: bold; color: var(--accent-teal); margin: 15px 0; }
+        .desc-text { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 30px; }
+        .modal-call-btn { display: inline-block; background: var(--text-main); color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-family: 'Fredoka', sans-serif; font-size: 1.2rem; text-align: center; }
 
-        /* Toast Notification */
-        .toast {
-            position: fixed; bottom: 30px; left: 30px; background: var(--card-bg); padding: 15px 25px;
-            border-radius: 16px; box-shadow: var(--shadow-hover); border-left: 5px solid var(--accent-teal);
-            z-index: 1000; transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s;
-            max-width: 320px;
-        }
-        .toast.hidden-toast { transform: translateX(-150%); opacity: 0; }
+        /* Toast */
+        .toast { position: fixed; bottom: 30px; left: 30px; background: white; padding: 15px 25px; border-radius: 16px; border-left: 5px solid var(--accent-teal); z-index: 1000; transform: translateX(-150%); transition: transform 0.5s; box-shadow: var(--shadow-hover); }
+        .toast.show { transform: translateX(0); }
         .toast-content { display: flex; align-items: center; gap: 15px; }
-        .toast-icon { font-size: 1.8rem; }
-        .toast-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.4; }
-        .toast-text strong { color: var(--text-main); }
 
-        /* --- MOBILE RESPONSIVE QUERIES --- */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            #hero { padding: 15% 5% 10% 5%; text-align: center; flex-direction: column; }
-            .hero-text { margin-bottom: 40px; }
-            .hero-text h1 { font-size: 3.5rem; }
-            .description { font-size: 1.1rem; margin-top: 15px; }
-            #hero-lollipop { max-width: 280px; }
-            
-            #product-section { padding: 15% 5%; }
-            #info-section { padding: 10% 5% 25% 5%; gap: 25px; }
-            .info-card { padding: 25px; }
-            
-            .modal-content { padding: 25px; width: 92%; max-height: 85vh; margin-top: 5vh; }
-            .modal-layout { gap: 15px; }
-            #main-modal-img { height: 250px; margin-bottom: 10px; }
-            .modal-details { align-items: flex-start; text-align: left; }
-            .close-btn { top: 10px; right: 15px; font-size: 2.2rem; }
-            .modal-call-btn { width: 100%; }
-            
-            .toast { left: 5%; bottom: 100px; width: 90%; max-width: none; padding: 12px 20px; }
-            
-            .tooltip-target::after { display: none; } /* Disable tooltips on mobile to prevent sticky hovers */
-        }
-
-        @media (min-width: 769px) {
-            .modal-gallery { min-width: 350px; flex: 1.2; }
-            .modal-details { min-width: 300px; flex: 1; }
+            #hero { flex-direction: column; text-align: center; padding-top: 10vh; }
+            .hero-text { text-align: center; margin-bottom: 50px; }
+            .menu-callout { left: auto; top: -70px; transform: rotate(0deg); }
+            .arrow-svg { transform: rotate(90deg) scaleY(-1); width: 60px; }
+            #hero-lollipop { max-width: 300px; }
+            .modal-content { padding: 25px; }
+            .modal-gallery, .modal-details { min-width: 100%; }
+            #main-modal-img { height: 300px; }
+            .toast { width: 90%; left: 5%; bottom: 120px; }
         }
     </style>
 </head>
@@ -245,97 +202,79 @@
 
     <div class="marquee-container">
         <div class="marquee-text">
-            🎉 Handcrafted treats in Zephyrhills, FL! &nbsp; ✨ &nbsp; 🍓 Custom orders available! &nbsp; ✨ &nbsp; 💖 Made with love & meticulous care! &nbsp; ✨ &nbsp; 🎉 Pick-up only for guaranteed perfection!
-        </div>
-    </div>
-
-    <div id="toast-notification" class="toast hidden-toast">
-        <div class="toast-content">
-            <span class="toast-icon">🛍️</span>
-            <div class="toast-text">
-                <strong>Someone in Zephyrhills</strong><br>
-                just ordered 12 Cake Pops!
-            </div>
+            🍓 Handcrafted Treats in Zephyrhills, FL! &nbsp; ✨ &nbsp; 💖 Made with Meticulous Love & Care! &nbsp; ✨ &nbsp; 📦 Pick-Up Only for Guaranteed Freshness! &nbsp; ✨ &nbsp; 🍓 Handcrafted Treats in Zephyrhills, FL!
         </div>
     </div>
 
     <main id="main-content">
-        
         <section id="hero" class="doodle-bg">
             <div class="hero-text">
                 <h1>Sugar Bliss</h1>
                 <p class="subtitle">Danielle & Kylyn</p>
-                <p class="description">Welcome to your momentary escape into pure, joyful indulgence. Handcrafted, beautiful sweet treats made with meticulous love by a local mom-and-daughter team.</p>
-                <button class="pill-btn tooltip-target" data-tooltip="Scroll to Menu!">Unwrap the Menu</button>
+                <p class="description">Handcrafted, beautiful sweet treats made with meticulous love by a local mom-and-daughter team. Every bite is a moment of pure bliss.</p>
             </div>
-            <div class="hero-image-container tooltip-target" data-tooltip="Click me to reveal treats!">
-                <img src="hero-lollipop.png" alt="[Image: Giant Strawberry]" id="hero-lollipop">
+
+            <div class="hero-image-container">
+                <div class="menu-callout">
+                    <span class="cursive-label">Open Menu!</span>
+                    <svg class="arrow-svg" viewBox="0 0 100 100">
+                        <path d="M20,20 Q50,20 70,50 T90,80" fill="none" stroke="currentColor" stroke-width="4"/>
+                        <polyline points="80,80 90,80 90,70" fill="none" stroke="currentColor" stroke-width="4"/>
+                    </svg>
+                </div>
+                <img src="hero-lollipop.png" alt="Signature Strawberry Lollipop" id="hero-lollipop">
             </div>
+
             <div class="wave-divider">
-                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.9,122.9,190.61,110.8,235.14,101.8,279.4,79.5,321.39,56.44Z" class="shape-fill"></path>
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.9,122.9,190.61,110.8,235.14,101.8,279.4,79.5,321.39,56.44Z"></path>
                 </svg>
             </div>
         </section>
 
         <section id="product-section" class="hidden-section">
             <h2 class="section-title">Our Sweet Offerings</h2>
-            <div class="product-grid" id="product-grid">
-                </div>
+            <div class="product-grid" id="product-grid"></div>
         </section>
 
         <section id="info-section">
             <div class="info-card">
                 <span class="highlight-text">The Heart of the Brand</span>
                 <h2>Our Story</h2>
-                <p>We are Danielle and Kylyn, a dedicated mom-and-daughter duo based in Zephyrhills. Sugar Bliss isn't just a bakery; it is a sanctuary of sweetness born from personal resilience.</p>
-                <p>Every single treat is crafted with the highest level of care, giving you peace of mind and a beautiful, edible work of art.</p>
+                <p>We are Danielle and Kylyn, a mom-and-daughter duo based in Zephyrhills. Sugar Bliss is a sanctuary of sweetness born from resilience.</p>
+                <p>Because Kylyn is immunocompromised, our standards require meticulous hygiene and strict safety. Every treat is crafted with the highest level of care, giving you a beautiful, safe, edible work of art.</p>
             </div>
 
             <div class="info-card">
-                <span class="highlight-text">Our Quality Guarantee</span>
-                <h2>Pick-Up Logistics</h2>
-                <p><strong>We consider our strict Pick-Up Only policy a Quality Guarantee.</strong> The brutal Florida heat is the enemy of our delicate chocolate and sugarcane glass. By refusing delivery, we guarantee that every customer receives a flawless, unmelted, picture-perfect product.</p>
-                
-                <h3 class="sub-heading">Operating Hours</h3>
-                <div class="table-responsive">
-                    <table class="ui-table">
-                        <thead>
-                            <tr>
-                                <th>Day</th>
-                                <th>Availability</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Mon - Thu</td><td>Pre-orders only</td></tr>
-                            <tr><td>Fri - Sat</td><td>10:00 AM - 6:00 PM</td></tr>
-                            <tr><td>Sun</td><td>11:00 AM - 4:00 PM</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <div class="info-card" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto; width: 100%;">
-                <h2>Frequently Asked Questions</h2>
-                <div class="accordion-container">
-                    <details class="ui-accordion">
-                        <summary>Where are you located?</summary>
-                        <div class="accordion-content">We are proudly based in Zephyrhills, FL! We serve specific designated areas locally. Give us a call to confirm your pick-up spot!</div>
-                    </details>
-                    <details class="ui-accordion">
-                        <summary>Do you cater for events or pop-ups?</summary>
-                        <div class="accordion-content">Absolutely! Aside from standard pick-ups, we frequently make appearances at local community events, farmers' markets, and pop-ups. Follow our social media to see where we'll be next!</div>
-                    </details>
-                    <details class="ui-accordion">
-                        <summary>How do I place an order?</summary>
-                        <div class="accordion-content">We provide a VIP, personalized concierge experience. Simply tap the "Call Now to Order" button to route directly to Danielle's phone, or visit our Facebook shop to finalize your custom order. No confusing digital carts—just real human connection!</div>
-                    </details>
-                </div>
+                <span class="highlight-text">Quality Guarantee</span>
+                <h2>Pick-Up Only</h2>
+                <p>The Florida heat is the enemy of delicate chocolate. To guarantee a flawless, unmelted product, we strictly do not offer delivery.</p>
+                <p>Pick-ups are available in designated Zephyrhills areas. We also make frequent appearances at local community pop-ups!</p>
             </div>
         </section>
+
+        <footer id="contact-footer">
+            <h2 class="section-title" style="color:white; margin-bottom:20px;">Get in Touch</h2>
+            <p style="font-size:1.2rem; opacity:0.8;">Ready to place an order or have a question? Contact us directly!</p>
+            
+            <div class="contact-grid">
+                <a href="mailto:sugarbliss1423@yahoo.com" class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <span class="contact-label">sugarbliss1423@yahoo.com</span>
+                </a>
+                <a href="https://www.instagram.com/sugar.bliss1423" target="_blank" class="contact-item">
+                    <span class="contact-icon">📸</span>
+                    <span class="contact-label">@sugar.bliss1423</span>
+                </a>
+                <a href="tel:+18130000000" class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <span class="contact-label">Click to Call</span>
+                </a>
+            </div>
+        </footer>
     </main>
 
-    <a href="tel:+18130000000" class="fab tooltip-target" data-tooltip="Call to Order!">📞</a>
+    <a href="tel:+18130000000" class="fab">📞</a>
 
     <div id="product-modal" class="modal">
         <div class="modal-content">
@@ -343,11 +282,10 @@
             <div class="modal-layout">
                 <div class="modal-gallery">
                     <img id="main-modal-img" src="" alt="Main Product">
-                    <div class="thumbnail-row" id="thumbnail-row"></div>
                 </div>
                 <div class="modal-details">
                     <h2 id="modal-title">Title</h2>
-                    <span class="badge" id="modal-badge" style="display:none; position: relative; top: 0; right: 0; width: max-content; margin-bottom: 10px;"></span>
+                    <span class="badge" id="modal-badge" style="display:none; position:relative; margin-bottom:10px;"></span>
                     <p id="modal-price" class="price">$0.00</p>
                     <div id="modal-description" class="desc-text"></div>
                     <a href="tel:+18130000000" class="modal-call-btn">Call Now to Order</a>
@@ -356,120 +294,88 @@
         </div>
     </div>
 
+    <div id="toast-notification" class="toast">
+        <div class="toast-content">
+            <span>🛍️</span>
+            <div><strong>Now serving in Zephyrhills!</strong> </div>
+        </div>
+    </div>
+
     <script>
-        // --- ALL JAVASCRIPT GOES HERE ---
         document.addEventListener("DOMContentLoaded", () => {
-            
             const productsData = [
                 {
-                    id: 1, title: "Signature Cake Pops", badge: "Best Seller", badgeClass: "best-seller", price: "$25.00 / dozen",
-                    description: "Moist, rich cake blended with velvety frosting, dipped in premium chocolate. Decorated beautifully in our signature mint green and soft pinks.",
-                    thumbnail: "1.png", gallery: ["1A.png", "1B.png"]
+                    id: 1, title: "Signature Cake Pops", badge: "Best Seller", price: "$25.00 / dozen",
+                    description: "Moist, rich cake blended with velvety frosting, dipped in premium chocolate. Decorated in signature mint green and soft pinks.",
+                    thumbnail: "1.png"
                 },
                 {
-                    id: 2, title: "Chocolate Strawberries", badge: "New", badgeClass: "new", price: "$30.00 / dozen",
-                    description: "Fresh, giant strawberries hand-dipped in rich milk and dark chocolate, detailed with purple drizzles and fondant butterflies.",
-                    thumbnail: "2.png", gallery: ["2A.png", "2B.png"]
+                    id: 2, title: "Chocolate Strawberries", badge: "New", price: "$30.00 / dozen",
+                    description: "Fresh, giant strawberries hand-dipped in rich chocolate, detailed with purple drizzles and fondant butterflies.",
+                    thumbnail: "2.png"
                 },
                 {
-                    id: 3, title: "Candied Grapes", badge: "", badgeClass: "", price: "$15.00",
-                    description: "A sweet, crunchy candy shell encapsulates fresh, juicy grapes. Rolled in crushed candies for the ultimate sweet-and-sour crunch.",
-                    thumbnail: "3.png", gallery: ["3A.png", "3B.png"]
+                    id: 3, title: "Candied Fruit", badge: "", price: "$25.00",
+                    description: "Crunchy candy shell encapsulates fresh, juicy grapes. Rolled in crushed candies for the ultimate sweet-and-sour crunch.",
+                    thumbnail: "3.png"
                 },
                 {
-                    id: 4, title: "Pastel Candied Fruit", badge: "Customer Fav", badgeClass: "best-seller", price: "$25.00",
-                    description: "A beautiful assortment of candied treats featuring our stunning marbled purple and pink sugar-glass coating.",
-                    thumbnail: "4.png", gallery: ["4A.png", "4B.png"]
+                    id: 4, title: "Pastel Candied Fruit", price: "$25.00",
+                    description: "Beautiful assortment featuring our stunning marbled purple and pink sugar-glass coating.",
+                    thumbnail: "4.png"
                 },
                 {
-                    id: 5, title: "Chocolate Covered Oreos", badge: "", badgeClass: "", price: "$20.00 / dozen",
-                    description: "Classic Oreos completely submerged in premium melting chocolate, decorated with sugar pearls and stunning drizzles.",
-                    thumbnail: "5.png", gallery: ["5A.png", "5B.png"]
+                    id: 5, title: "Chocolate Covered Oreos", badge: "", price: "$20.00 / dozen",
+                    description: "Classic Oreos submerged in premium chocolate, decorated with sugar pearls and stunning drizzles.",
+                    thumbnail: "5.png"
                 }
             ];
 
             const productGrid = document.getElementById('product-grid');
-            productsData.forEach(product => {
+            productsData.forEach(p => {
                 const card = document.createElement('div');
                 card.classList.add('product-card');
-                let badgeHTML = product.badge ? `<span class="badge ${product.badgeClass}">${product.badge}</span>` : '';
-                card.innerHTML = `${badgeHTML}<img src="${product.thumbnail}" alt="[Treat ${product.id}]"><h3>${product.title}</h3>`;
-                card.addEventListener('click', () => openModal(product));
+                let badge = p.badge ? `<span class="badge ${p.badge.toLowerCase().replace(' ','-')}">${p.badge}</span>` : '';
+                card.innerHTML = `${badge}<img src="${p.thumbnail}" alt="${p.title}"><h3>${p.title}</h3>`;
+                card.addEventListener('click', () => openModal(p));
                 productGrid.appendChild(card);
             });
 
-            const btnReveal = document.querySelector('.pill-btn');
-            const heroImage = document.getElementById('hero-lollipop');
+            const heroLollipop = document.getElementById('hero-lollipop');
             const productSection = document.getElementById('product-section');
 
-            function revealProducts() {
-                productSection.classList.remove('hidden-section');
+            heroLollipop.addEventListener('click', () => {
                 productSection.classList.add('reveal-section');
-                setTimeout(() => {
-                    productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
-            }
-
-            btnReveal.addEventListener('click', revealProducts);
-            heroImage.addEventListener('click', revealProducts);
+                productSection.scrollIntoView({ behavior: 'smooth' });
+            });
 
             const modal = document.getElementById('product-modal');
-            const closeModalBtn = document.getElementById('close-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalBadge = document.getElementById('modal-badge');
-            const modalPrice = document.getElementById('modal-price');
-            const modalDesc = document.getElementById('modal-description');
             const mainImg = document.getElementById('main-modal-img');
-            const thumbRow = document.getElementById('thumbnail-row');
 
-            function openModal(product) {
-                modalTitle.innerText = product.title;
-                modalPrice.innerText = product.price;
-                modalDesc.innerText = product.description;
+            function openModal(p) {
+                document.getElementById('modal-title').innerText = p.title;
+                document.getElementById('modal-price').innerText = p.price;
+                document.getElementById('modal-description').innerText = p.description;
                 
-                if(product.badge) {
-                    modalBadge.innerText = product.badge;
-                    modalBadge.className = `badge ${product.badgeClass}`;
-                    modalBadge.style.display = 'inline-block';
-                } else {
-                    modalBadge.style.display = 'none';
-                }
+                const mb = document.getElementById('modal-badge');
+                if(p.badge) { mb.innerText = p.badge; mb.style.display = 'inline-block'; mb.className = 'badge best-seller'; }
+                else { mb.style.display = 'none'; }
 
-                thumbRow.innerHTML = ''; 
-                mainImg.src = product.gallery[0] || product.thumbnail; 
-
-                product.gallery.forEach((imgSrc, index) => {
-                    const thumb = document.createElement('img');
-                    thumb.src = imgSrc;
-                    thumb.alt = "Thumbnail";
-                    if(index === 0) thumb.classList.add('active');
-
-                    thumb.addEventListener('click', function() {
-                        mainImg.src = this.src;
-                        document.querySelectorAll('.thumbnail-row img').forEach(img => img.classList.remove('active'));
-                        this.classList.add('active');
-                    });
-                    thumbRow.appendChild(thumb);
-                });
-
+                mainImg.src = p.thumbnail;
+                
                 modal.classList.add('show');
-                document.body.style.overflow = 'hidden'; 
+                document.body.style.overflow = 'hidden';
             }
 
-            closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
-
-            function closeModal() {
+            document.getElementById('close-modal').addEventListener('click', () => {
                 modal.classList.remove('show');
-                document.body.style.overflow = 'auto'; 
-            }
+                document.body.style.overflow = 'auto';
+            });
 
-            // Fake Toast Notification Pop up after 2.5 seconds
             setTimeout(() => {
-                const toast = document.getElementById('toast-notification');
-                toast.classList.remove('hidden-toast');
-                setTimeout(() => { toast.classList.add('hidden-toast'); }, 4500);
-            }, 3000); 
+                document.getElementById('toast-notification').classList.add('show');
+                setTimeout(() => document.getElementById('toast-notification').classList.remove('show'), 5000);
+            }, 3000);
         });
     </script>
 </body>
